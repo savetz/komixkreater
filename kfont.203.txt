@@ -1,0 +1,65 @@
+0 REM KFONT.203 - BY KAY SAVETZ CIRCA 1986-1988
+1 REM All of the ATASCII characters are unreadable in this ASCII version of the listing, sorry.
+5 CLR :DIM C$(14),FILE$(14),A$(3300):AVG=0:TALL=0
+7 A$=" ":A$(1,1)=" ":A$(3300,3300)=" "
+10 GRAPHICS 0:REM POKE 16,64:POKE 53774,64
+20 POKE 710,0:POKE 82,0:POKE 752,1
+27 FOR D=1 TO AVG:? "";:NEXT D
+30 ? "}†††††‘»≈†À≈÷…Œ†ÀœÕ…ÿ†™∆œŒ‘™†À“≈¡‘≈“†††††"
+40 POSITION 20,1:? "COPYRIGHT (C) 1987":POSITION 20,2:? "BY KEVIN SAVETZ":POSITION 20,3:? "ALL RIGHTS RESERVED"
+50 POSITION 0,13:? "  ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+60 ? ""
+70 POSITION 0,16:? :? "†Ã†oad Kfont":? "†”†ave Kfont"
+80 ? "†«†et SuperFont":? "†≈†dit character"
+100 POSITION 20,19:? "SELECT>";:GOSUB 5000
+110 ? C$:IF C$<>"L" AND C$<>"S" AND C$<>"G" AND C$<>"E" THEN 70
+115 IF C$<>"G" THEN 230
+116 TRAP 30
+120 POSITION 0,15:? "úúúúúú(OR '.1' TO CLEAR SUPERFONT.)":? "FILENAME>";:INPUT #16;C$:IF LEN(C$)<2 THEN 220
+121 IF C$=".1" THEN 10
+130 TRAP 220:FILE$="D:":IF C$(1,2)<>"D:" THEN FILE$(3,3+LEN(C$))=C$
+140 IF C$(1,2)="D:" THEN FILE$(3,1+LEN(C$))=C$(3,LEN(C$))
+150 TRAP 220:OPEN #1,4,0,FILE$
+160 X=16:C=(PEEK(106)-8)*256:POKE 756,C/256
+170 D=834:E=836:F=840
+180 POKE E+X+1,C/256:POKE E+X,0
+200 POKE D+X,7:G=USR(ADR("hhh™LV‰"),X)
+210 CLOSE #1:GOTO 70
+220 ? "DISK ERROR!                  ˝":FOR D=1 TO 100:NEXT D:CLOSE #1:GOTO 70
+230 IF C$<>"E" THEN 1000
+235 TRAP 60
+240 POSITION 0,17:? "úúúúú":IF AVG=0 THEN ? "ENTER CHARACTER LENGTH FOR THIS FONT:":? ">";:INPUT #16,AVG
+245 IF AVG>10 OR AVG<2 THEN AVG=0:GOTO 240
+250 POSITION 0,17:? "úúúúú":IF TALL=0 THEN ? "ENTER CHARACTER HEIGTH FOR THIS FONT:":? ">";:INPUT #16,TALL
+255 IF TALL<2 OR TALL>10 THEN TALL=0:GOTO 250
+256 POSITION 0,1:? "";
+260 FOR D=1 TO AVG:? "";:NEXT D:? "":FOR D=1 TO TALL:? "|";:FOR E=1 TO AVG:? " ";:NEXT E:? "|":NEXT D:? "";
+270 FOR D=1 TO AVG:? "";:NEXT D:? ""
+280 POSITION 0,18:? "úúúúú(OR RETURN FOR MENU)":? "ENTER CHARACTER (A-Z,0-9) TO MODIFY"
+290 GOSUB 5000:IF C$="" THEN 60
+300 IF ASC(C$)>47 AND ASC(C$)<58 THEN 320
+310 IF ASC(C$)<65 OR ASC(C$)>90 THEN 60
+320 ? "":IF ASC(C$)<91 AND ASC(C$)>64 THEN FOR D=1 TO ASC(C$)-63:? "";:NEXT D:? CHR$(ASC(C$)+128)
+330 IF ASC(C$)>47 AND ASC(C$)<58 THEN ? "";:FOR D=1 TO VAL(C$):? "";:NEXT D
+335 IF C$="0" THEN ? "";
+340 IF ASC(C$)>47 AND ASC(C$)<58 THEN ? CHR$(ASC(C$)+128)
+353 IF ASC(C$)>64 AND ASC(C$)<91 THEN CHNO=ASC(C$)-64
+354 IF ASC(C$)>47 AND ASC(C$)<58 THEN CHNO=ASC(C$)-19
+355 POKE 752,0
+360 POSITION 1,2:FOR D=1 TO TALL:? A$(TALL*CHNO,TALL*CHNO+AVG-1):? "";:NEXT D
+370 D=1:E=1:POSITION 1,2
+375 GOSUB 5000
+380 IF C$="" THEN D=D+1:? "";:IF D>AVG THEN ? "";:D=D-1
+390 IF C$="" THEN D=D-1:? "";:IF D<1 THEN ? "";:D=D+1
+400 IF C$="" THEN E=E+1:? "";:IF E>TALL THEN ? "";:E=E-1
+410 IF C$="" THEN E=E-1:? "";:IF E<1 THEN ? "";:E=E+1
+411 IF C$="" OR C$="" OR C$="" OR C$="" THEN 375
+420 ? C$;:X=X+1:IF X>AVG THEN ? "";:FOR D=1 TO AVG:? "";:NEXT D
+440 GOTO 375
+500 REM †«≈‘†‘»≈†√»¡“Æ≠ƒ“¡◊Æ†“œ’‘Æ†∆…ÿ≈ƒ
+510 REM †‘»≈Œ†“≈¡ƒ†ß≈ÕÆ†®Ÿ’√À°©†‘œ†¡§†††
+520 REM †ÆÆÆÆ‘»≈Œ†”¡÷≈ØÃœ¡ƒÆÆÆÆ†††††††††
+999 END 
+1000 REM .....
+4999 END 
+5000 OPEN #1,4,0,"K:":GET #1,C:C$=CHR$(C):CLOSE #1:RETURN 
